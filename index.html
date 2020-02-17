@@ -22,7 +22,7 @@
             在登陆NowChat之前，您需要做以下准备：
             <br/>
             <div class="mdui-textfield">
-                <label class="mdui-textfield-label">请输入昵称：</label>
+                <label class="mdui-textfield-label">请输入昵称：(长度2-20位,由中文，英文字母，数字及下划线组成))</label>
                 <input class="mdui-textfield-input" type="text" value="" id="HAS_UNI">
             </div>
         </div>
@@ -57,20 +57,20 @@
             <div class="mdui-col-xs-10 mdui-col-sm-8 mdui-shadow-12">
                 <div class="mdui-row">
                     <div class="mdui-toolbar mdui-color-white mdui-color-theme">
-                        <a class=" mdui-btn mdui-btn-icon" id="openControlMenu"><i
-                            class=" mdui-icon material-icons ">menu</i></a>
+                        <a class=" mdui-btn mdui-btn-icon" id="openControlMenu">
+                            <i class=" mdui-icon material-icons ">menu</i></a>
                         <ul class="mdui-menu" id="controlMenu">
                             <li class="mdui-menu-item">
-                                <a href="javascript:;" class="mdui-ripple" onclick="refresh()"><i
-                                    class="mdui-menu-item-icon mdui-icon material-icons">autorenew</i>刷新</a>
+                                <a href="javascript:;" class="mdui-ripple" onclick="refresh()">
+                                    <i class="mdui-menu-item-icon mdui-icon material-icons">autorenew</i>刷新</a>
                             </li>
                             <li class="mdui-menu-item">
                                 <a href="javascript:;" class="mdui-ripple" onclick="privateTipMessage('-- 功能尚未完成 --')">
                                     <i class="mdui-menu-item-icon mdui-icon material-icons">settings</i>设置</a>
                             </li>
                             <li class="mdui-menu-item" id="openinfoBOX">
-                                <a href="javascript:;" class="mdui-ripple"><i
-                                    class="mdui-menu-item-icon mdui-icon material-icons">info_outline</i>关于</a>
+                                <a href="javascript:;" class="mdui-ripple">
+                                    <i class="mdui-menu-item-icon mdui-icon material-icons">info_outline</i>关于</a>
                             </li>
                             <li class="mdui-divider"></li>
                             <li class="mdui-menu-item">
@@ -87,10 +87,16 @@
                 <div class="mdui-row mdui-color-grey-300 ">
                     <div class="mdui-col-xs-4 mdui-col-sm-2 "></div>
                     <div class="mdui-col-xs-10 mdui-col-sm-8 ">
-                        <div class="mdui-textfield mdui-textfield-floating-label "><i class="mdui-icon material-icons">textsms</i><label class="mdui-textfield-label">说点什么... (enter 键发送也可以)</label><input class="mdui-textfield-input" type="text" id="messageBox" required />
+                        <div class="mdui-textfield mdui-textfield-floating-label">
+                            <i class="mdui-icon material-icons">textsms</i>
+                            <label class="mdui-textfield-label">说点什么... (enter 键发送也可以)</label>
+                            <input class="mdui-textfield-input" type="text" id="messageBox" required />
                             <div class="mdui-textfield-error ">发送内容不能为空</div>
                         </div>
-                        <div class="mdui-center mdui-text-right"><button type="button" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="sendMessage" onclick="sendMessage()">发射</button></div><br/>
+                        <div class="mdui-center mdui-text-right">
+                            <button type="button" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent" id="sendMessage" onclick="sendMessage()">发射</button>
+                        </div>
+                        <br/>
                     </div>
                     <div class=" mdui-col-xs-4 mdui-col-sm-2"></div>
                 </div>

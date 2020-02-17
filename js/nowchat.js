@@ -150,7 +150,7 @@
      //启用页面关闭监听
      window.onbeforeunload = function() {　　
          logout();
-     }
+     };
 
      //MDUI 元素控制器
      var inst_ControlMenu = new mdui.Menu('#openControlMenu', '#controlMenu');
