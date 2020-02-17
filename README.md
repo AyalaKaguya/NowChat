@@ -3,6 +3,9 @@
 
 作者：
             [纸莫](https://papernote.cn/)
+前来摸鱼的顾问：
+            [Jim Allen](https://github.com/jim1756999)
+
 
 编写平台：Visual Studio Code
 
@@ -16,6 +19,6 @@
             [MDUI
             ](https://mdui.org/)
 
-在GitHub上查看：
+GitHub仓库：
             [NowChat
             ](https://github.com/zhimochina/NowChat)
