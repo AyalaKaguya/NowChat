@@ -167,7 +167,7 @@
  };
 
  //获取用户名等相关配置
- userName = test
+ userName = "test";
  init()
 
  /*
