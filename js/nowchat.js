@@ -167,6 +167,10 @@
  };
 
  //获取用户名等相关配置
+ userName = test
+ init()
+
+ /*
  openHAS()
  var dialog_HAS = document.getElementById('HAS');
  dialog_HAS.addEventListener('confirm.mdui.dialog', function() {
@@ -178,3 +182,4 @@
          openHAS();
      }
  });
+ */
