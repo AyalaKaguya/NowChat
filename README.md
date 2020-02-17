@@ -3,7 +3,7 @@
 
 作者：
             [纸莫](https://papernote.cn/)
-前来摸鱼的顾问：
+(伪）顾问：
             [Jim Allen](https://github.com/jim1756999)
 
 
