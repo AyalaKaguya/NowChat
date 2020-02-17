@@ -1,0 +1,273 @@
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>NowChat 聊天室</title>
+    <link rel="stylesheet" href="https://cdnjs.loli.net/ajax/libs/mdui/0.4.3/css/mdui.min.css">
+    <style type="text/css">
+        .center-in-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            -moz-transform: translate(-50%, -50%);
+            -ms-transform: translate(-50%, -50%);
+            -o-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <script src="https://cdnjs.loli.net/ajax/libs/mdui/0.4.3/js/mdui.min.js">
+    </script>
+    <script type="text/javascript" src="https://cdn.goeasy.io/goeasy-1.0.3.js"></script>
+</head>
+
+<body class="mdui-theme-primary-indigo mdui-theme-accent-pink">
+    <div class="mdui-dialog mdui-typo" id="HAS">
+        <div class="mdui-dialog-title">NowChat 登陆</div>
+        <div class="mdui-dialog-content" style="height: 92px;">
+            在登陆NowChat之前，您需要做以下准备：
+            <br />
+            <div class="mdui-textfield">
+                <label class="mdui-textfield-label">请输入用户名：</label>
+                <input class="mdui-textfield-input" type="text" value="" id="HAS_UNI">
+            </div>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-confirm>确定</button>
+        </div>
+    </div>
+    <div class="mdui-dialog mdui-typo" id="informationBOX">
+        <div class="mdui-dialog-title">NowChat 1.1 测试版</div>
+        <div class="mdui-dialog-content">欢迎使用NowChat，纸莫正在准备GitHub中。
+            <br /><br />作者：
+            <a href="https://papernote.cn/ " class="mdui">纸莫</a>
+            <br />编写平台：Visual Studio Code
+            <br />测试平台：Chrome 70
+            <br />网络相关：
+            <a href="https://goeasy.io/ " class="mdui">Goeasy
+            </a>
+            <br />网页框架：
+            <a href="https://mdui.org/ " class="mdui-link">MDUI
+            </a>
+        </div>
+        <div class="mdui-dialog-actions">
+            <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>确定</button>
+        </div>
+    </div>
+    <div class="mdui-container center-in-center">
+        <div class="mdui-row">
+            <div class="mdui-col-xs-4 mdui-col-sm-2 "></div>
+            <div class="mdui-col-xs-10 mdui-col-sm-8 mdui-shadow-12">
+                <div class="mdui-row">
+                    <div class="mdui-toolbar mdui-color-white mdui-color-theme">
+                        <a class=" mdui-btn mdui-btn-icon" id="openControlMenu"><i
+                            class=" mdui-icon material-icons ">menu</i></a>
+                        <ul class="mdui-menu" id="controlMenu">
+                            <li class="mdui-menu-item">
+                                <a href="javascript:;" class="mdui-ripple" onclick="refresh()"><i
+                                    class="mdui-menu-item-icon mdui-icon material-icons">autorenew</i>刷新</a>
+                            </li>
+                            <li class="mdui-menu-item">
+                                <a href="javascript:;" class="mdui-ripple" onclick="privateTipMessage('-- 功能尚未完成 --')">
+                                    <i class="mdui-menu-item-icon mdui-icon material-icons">settings</i>设置</a>
+                            </li>
+                            <li class="mdui-menu-item" id="openinfoBOX">
+                                <a href="javascript:;" class="mdui-ripple"><i
+                                    class="mdui-menu-item-icon mdui-icon material-icons">info_outline</i>关于</a>
+                            </li>
+                            <li class="mdui-divider"></li>
+                            <li class="mdui-menu-item">
+                                <a href="javascript:;" class="mdui-ripple" onclick="logout()">注销</a>
+                            </li>
+                        </ul>
+                        <span class="mdui-typo-title ">NowChat 聊天室</span>
+                        <div class="mdui-toolbar-spacer "></div>
+                    </div>
+                </div>
+                <div class=" mdui-center mdui-valign">
+                    <div id="textarea" class="mdui-col-xs-12 " style="overflow-y: auto;height: 300px; " display：block overflow：hidden></div>
+                </div><br/>
+                <div class="mdui-row mdui-color-grey-300 ">
+                    <div class="mdui-col-xs-4 mdui-col-sm-2 "></div>
+                    <div class="mdui-col-xs-10 mdui-col-sm-8 ">
+                        <div class="mdui-textfield mdui-textfield-floating-label "><i class="mdui-icon material-icons ">textsms</i><label class="mdui-textfield-label ">说点什么... (enter 键发送也可以)</label><input class="mdui-textfield-input " type="text" id="messageBox" required />
+                            <div class="mdui-textfield-error ">发送内容不能为空</div>
+                        </div>
+                        <div class="mdui-center mdui-text-right "><button type="button" class="mdui-btn mdui-btn-raised mdui-ripple mdui-color-theme-accent " id="sendMessage" onclick="sendMessage()">发射</button></div><br />
+                    </div>
+                    <div class=" mdui-col-xs-4 mdui-col-sm-2 "></div>
+                </div>
+            </div>
+            <div class="mdui-col-xs-4 mdui-col-sm-2 "></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        //Goeasy controler
+        var userName, userLocation, userAvatar
+        var goEasy = new GoEasy({
+            host: 'hangzhou.goeasy.io',
+            appkey: "BC-de02bc0bb7e54c009f43510d74c88156",
+            forceTLS: true,
+            onDisconnected: function() {
+                console.log('goeasy:连接断开！')
+                mdui.dialog({
+                    title: '错误！',
+                    content: '与远程服务器连接断开，请刷新后重试！',
+                    modal: true,
+                    closeOnEsc: false,
+                    destroyOnClosed: true
+                });
+            },
+            onConnectFailed: function(error) {
+                console.log('goeasy:连接失败或错误！')
+                mdui.dialog({
+                    title: '错误！',
+                    content: '与远程服务器连接断开，请刷新后重试！',
+                    modal: true,
+                    closeOnEsc: false,
+                    destroyOnClosed: true
+                });
+            }
+        });
+
+        function randomNum(minNum, maxNum) {
+            //随机整数生成器
+            switch (arguments.length) {
+                case 1:
+                    return parseInt(Math.random() * minNum + 1, 10);
+                    break;
+                case 2:
+                    return parseInt(Math.random() * (maxNum - minNum + 1) + minNum, 10);
+                    break;
+                default:
+                    return 0;
+                    break;
+            }
+        }
+
+        function DIVinner(html, div = "textarea") {
+            //在div中插入信息，并把滚动条拉到最底
+            if (html !== " ") {
+                var last_message = document.getElementById(div).innerHTML;
+                document.getElementById(div).innerHTML = last_message + html
+            };
+            var div = document.getElementById('textarea');
+            div.scrollTop = div.scrollHeight;
+        };
+
+        function sendMessage() {
+            //发送标准对话框信息
+            var msg = document.getElementById("messageBox").value
+            if (msg !== "") {
+                goEasy.publish({
+                    channel: "NowChat_Public",
+                    message: "<div class='mdui-row'><div class='mdui-col-xs-1'><img class='mdui-chip-icon mdui-float-right' src='" + userAvatar + "'/></div><div class='mdui-col-xs-10'><div class='mdui-text-color-black-icon'>" + userName + "</div><div class='mdui-chip mdui-color-white mdui-shadow-2'><span class='mdui-chip-title mdui-text-truncate' style='max-width:500px;'>" + msg + "</span></div><br/><br/></div></div>"
+                });
+                document.getElementById("messageBox").value = "";
+            }
+        };
+
+        function commonTipMessage(msg) {
+            //发送公共系统信息
+            goEasy.publish({
+                channel: "NowChat_Public",
+                message: "<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>" + msg + "</div><br/>"
+            });
+            document.getElementById('messageBox').value = "";
+        };
+
+        function privateTipMessage(msg) {
+            //发送私有系统信息
+            DIVinner("<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>" + msg + "</div><br/>")
+        };
+
+        function logout() {
+            //取消Goeasy频道监听
+            commonTipMessage("-- 用户 " + userName + " 已退出本聊天室 --");
+            goEasy.unsubscribe({
+                channel: "NowChat_Public"
+            });
+            privateTipMessage("-- 您已退出聊天室，您将不会再接收到消息 --");
+        };
+
+        function login() {
+            //打开Goeasy频道监听
+            commonTipMessage("-- 用户 " + userName + " 已加入本聊天室 --");
+            goEasy.subscribe({
+                    channel: "NowChat_Public",
+                    onMessage: function(message) {
+                        DIVinner(message.content);
+                    }
+                }
+
+            );
+            privateTipMessage("-- 您已加入聊天室：Public --");
+        };
+
+        function refresh() {
+            //刷新，其实没卵用。。。
+            goEasy.unsubscribe({
+                channel: "NowChat_Public"
+            });
+            goEasy.subscribe({
+                    channel: "NowChat_Public",
+                    onMessage: function(message) {
+                        DIVinner(message.content);
+                    }
+                }
+
+            );
+            privateTipMessage("-- 已刷新 --");
+        };
+
+        function openHAS() {
+            new mdui.Dialog('#HAS', {
+                modal: true,
+                closeOnEsc: false,
+                destroyOnClosed: true,
+                history: false
+            }).open();
+        };
+
+        function init() {
+            //随机为用户选取头像
+            userAvatar = "images/Avatar-" + randomNum(1, 10) + ".png";
+
+            //启动enter键监听
+            document.onkeydown = function(event) {
+                var e = event || window.event || arguments.callee.caller.arguments[0];
+                if (e && e.keyCode == 13) {
+                    sendMessage();
+                };
+            };
+
+            //启用页面关闭监听
+            window.onbeforeunload = function() {　　
+                logout();
+            }
+
+            //MDUI 元素控制器
+            var inst_ControlMenu = new mdui.Menu('#openControlMenu', '#controlMenu');
+            var inst_infoBOX = new mdui.Dialog('#informationBOX');
+            document.getElementById('openinfoBOX').addEventListener('click', function() {
+                inst_infoBOX.open();
+            });
+            document.getElementById('openControlMenu').addEventListener('click', function() {
+                inst_ControlMenu.open();
+            });
+
+            //登陆
+            login();
+        };
+
+        //获取用户名等相关配置
+        openHAS()
+        var dialog_HAS = document.getElementById('HAS');
+        dialog_HAS.addEventListener('confirm.mdui.dialog', function() {
+            userName = document.getElementById("HAS_UNI").value
+            init();
+        });
+    </script>
+</body>
+
+</html>
