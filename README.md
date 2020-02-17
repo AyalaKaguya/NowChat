@@ -3,22 +3,21 @@
 
 作者：
             [纸莫](https://papernote.cn/)
+
 前来摸鱼的顾问：
             [Jim Allen](https://github.com/jim1756999)
 
+测试人员：  [吴先森]](https://wunote.cn/)
 
 编写平台：Visual Studio Code
 
 测试平台：Chrome 80
 
 网络相关：
-            [Goeasy
-            ](https://goeasy.io/)
+            [Goeasy](https://goeasy.io/)
 
 网页框架：
-            [MDUI
-            ](https://mdui.org/)
+            [MDUI](https://mdui.org/)
 
 GitHub仓库：
-            [NowChat
-            ](https://github.com/zhimochina/NowChat)
+            [NowChat](https://github.com/zhimochina/NowChat)
