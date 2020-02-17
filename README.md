@@ -4,7 +4,7 @@
 作者：
             [纸莫](https://papernote.cn/)
             
-(伪）顾问：
+（伪）顾问：
             [Jim Allen](https://github.com/jim1756999)
 
 测试人员：  三位匿名
