@@ -25,6 +25,7 @@
          });
      }
  });
+ var login_count = 0;
 
  function randomNum(minNum, maxNum) {
      //随机整数生成器
@@ -117,6 +118,10 @@
  };
 
  function openHAS() {
+     //打开HAS，获取用户名
+     if (mdui.Dialog('#HAS') == "opened") {
+         mdui.Dialog('#HAS').destroy()
+     }
      new mdui.Dialog('#HAS', {
          modal: true,
          closeOnEsc: false,
@@ -126,6 +131,11 @@
  };
 
  function init() {
+     //初始化页面，添加监听
+     //调用一次限制
+     login_count = login_count + 1;
+     if (login_count !== 1) { return "none" };
+
      //随机为用户选取头像
      userAvatar = "images/Avatar-" + randomNum(1, 10) + ".png";
 
@@ -160,6 +170,11 @@
  openHAS()
  var dialog_HAS = document.getElementById('HAS');
  dialog_HAS.addEventListener('confirm.mdui.dialog', function() {
+     var preg = /^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/
      userName = document.getElementById("HAS_UNI").value
-     init();
+     if (preg.test(userName) == true) {
+         init(); //网页初始化
+     } else {
+         openHAS();
+     }
  });
