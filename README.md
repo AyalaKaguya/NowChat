@@ -7,6 +7,7 @@
             [Jim Allen](https://github.com/jim1756999)
 
 测试人员：  [吴先森]](https://www.wunote.cn/)
+            [rain 雨后彩虹](https://www.rainlab.top/)
 
 编写平台：Visual Studio Code
 
