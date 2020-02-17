@@ -3,11 +3,10 @@
 
 作者：
             [纸莫](https://papernote.cn/)
-
-前来摸鱼的顾问：
+(伪）顾问：
             [Jim Allen](https://github.com/jim1756999)
 
-测试人员：  [吴先森]](https://wunote.cn/)
+测试人员：  [吴先森]](https://www.wunote.cn/)
 
 编写平台：Visual Studio Code
 
