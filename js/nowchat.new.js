@@ -56,32 +56,16 @@ function DIVinner(html, div = "textarea") {
 };
 
 function sendMessage() {
-    //发送标准对话框信息
     var msg = document.getElementById("messageBox").value
     if (msg !== "") {
-        goEasy.publish({
-            channel: NC_channel,
-            message: "<div class='mdui-row'><div class='mdui-col-xs-1'><img class='mdui-chip-icon mdui-float-right' src='" +
-                userAvatar + "'/></div><div class='mdui-col-xs-10'><div class='mdui-text-color-black-icon'>" +
-                userName + "</div><div class='mdui-chip mdui-color-white mdui-shadow-2'><span class='mdui-chip-title mdui-text-truncate' style='max-width:500px;'>" +
-                msg + "</span></div><br/><br/></div></div>"
-        });
+        pushMessage(type = "markdown", userName, userAvatar, msg)
         document.getElementById("messageBox").value = "";
     }
 };
 
-function commonTipMessage(msg) {
-    //发送公共系统信息
-    goEasy.publish({
-        channel: NC_channel,
-        message: "<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>" + msg + "</div><br/>"
-    });
-    document.getElementById('messageBox').value = "";
-};
-
 //pushMessage("markdown", "paper", "none", "test")
 
-function pushMessage(type, userName, userAvatar, msg, channel = NC_channel) {
+function pushMessage(type, userName = "system", userAvatar, msg, channel = NC_channel) {
     //向Goeasy推送JSON数据
     function pushOrigin(json) {
         goEasy.publish({
@@ -150,11 +134,6 @@ function pullMessage(userName, channel = NC_channel) {
     });
 };
 
-function privateTipMessage(msg) {
-    //发送私有系统信息
-    DIVinner("<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>" + msg + "</div><br/>")
-};
-
 function logout() {
     //取消Goeasy频道监听
     commonTipMessage("-- 用户 " + userName + " 已退出本聊天室 --");
@@ -167,14 +146,7 @@ function logout() {
 function login() {
     //打开Goeasy频道监听
     commonTipMessage("-- 用户 " + userName + " 已加入本聊天室 --");
-    goEasy.subscribe({
-            channel: NC_channel,
-            onMessage: function(message) {
-                DIVinner(message.content);
-            }
-        }
-
-    );
+    pullMessage(userName)
     privateTipMessage("-- 您已加入聊天室：Public --");
 };
 
