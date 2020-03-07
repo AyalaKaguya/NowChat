@@ -79,6 +79,7 @@ function msg_processer(json) {
         message_str = message_str.replace(/(##\s+\[)([\S| ]+)(\]\()(\S+)\)/gi, '<h2><a href="$4">$2</a></h2>');
         message_str = message_str.replace(/(\[)([\S| ]+)(\]\()(\S+)\)/g, "<a href='$4'>$2</a>");
         message_str = message_str.replace(/[\n|\r]+/g, "</br>");
+        message_str = message_str.replace(/(<!--.*?-->)|(<(meta|link).*?>)/g, '')
         DIVinner("<div class='mdui-row'><div class='mdui-col-xs-1'><img class='mdui-chip-icon mdui-float-right' src='" +
             json.userAvatar + "'/></div><div class='mdui-col-xs-10'><div class='mdui-text-color-black-icon'>" +
             json.userName + "</div><div class='mdui-chip mdui-color-white mdui-shadow-2'><span class='mdui-chip-title mdui-text-truncate' style='max-width:500px;'>" +
