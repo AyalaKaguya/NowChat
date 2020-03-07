@@ -73,10 +73,16 @@ function msg_processer(json) {
         console.log("你的build号：" + NC_bulid + "与目前收到的build号" + json.build + "不匹配，请检查Github上的更新！")
     };
     if (json.type == "markdown") {
+        var message_str = json.message
+        message_str = message_str.replace(/(!\[[\S| ]+\])(\()([\S| ]+)(\))/gi, '<img src="$3">');
+        message_str = message_str.replace(/#(?=\S+\))/g, '%23');
+        message_str = message_str.replace(/(##\s+\[)([\S| ]+)(\]\()(\S+)\)/gi, '<h2><a href="$4">$2</a></h2>');
+        message_str = message_str.replace(/(\[)([\S| ]+)(\]\()(\S+)\)/g, "<a href='$4'>$2</a>");
+        message_str = message_str.replace(/[\n|\r]+/g, "</br>");
         DIVinner("<div class='mdui-row'><div class='mdui-col-xs-1'><img class='mdui-chip-icon mdui-float-right' src='" +
             json.userAvatar + "'/></div><div class='mdui-col-xs-10'><div class='mdui-text-color-black-icon'>" +
             json.userName + "</div><div class='mdui-chip mdui-color-white mdui-shadow-2'><span class='mdui-chip-title mdui-text-truncate' style='max-width:500px;'>" +
-            json.message + "</span></div><br/><br/></div></div>")
+            message_str + "</span></div><br/><br/></div></div>")
     };
     if (json.type == "system") {
         if (json.uuid == user_UUID) return;
