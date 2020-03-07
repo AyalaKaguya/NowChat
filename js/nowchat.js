@@ -1,9 +1,9 @@
 var $$ = mdui.JQ;
 //系统设置
-var NC_version = "1.4";
-var NC_bulid = 200306;
-var NC_channel = "NowChat_Public";
-var login_count = 0;
+var NC_version = "1.4",
+    NC_bulid = 200307,
+    NC_channel = "NowChat_Public",
+    login_count = 0;
 //Goeasy controler
 var user_Name,
     user_Location,
@@ -157,19 +157,6 @@ function refresh() {
     pushMessage("private", "-- 已刷新 --")
 };
 
-function openHAS() {
-    //打开HAS，获取用户名
-    if (mdui.Dialog('#HAS') == "opened") {
-        mdui.Dialog('#HAS').destroy()
-    }
-    new mdui.Dialog('#HAS', {
-        modal: true,
-        closeOnEsc: false,
-        destroyOnClosed: true,
-        history: false
-    }).open();
-};
-
 function init() {
     //初始化页面，添加监听
     //调用一次限制
@@ -211,15 +198,23 @@ function init() {
 
 //获取用户名等相关配置,并启动。
 $$(function() {
-    openHAS()
+    var inst_HAS = new mdui.Dialog('#HAS', {
+        modal: true,
+        closeOnEsc: false,
+        closeOnConfirm: false,
+        history: false
+    });
+
+    inst_HAS.open()
     var dialog_HAS = document.getElementById('HAS');
     dialog_HAS.addEventListener('confirm.mdui.dialog', function() {
         var preg = /^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/
         user_Name = document.getElementById("HAS_UNI").value
         if (preg.test(user_Name) == true) {
+            inst_HAS.close()
             init(); //网页初始化
         } else {
-            openHAS();
+            $$('#HAS_label').addClass('mdui-text-color-pink-accent')
         }
     });
 })
