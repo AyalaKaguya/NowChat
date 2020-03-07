@@ -1,39 +1,14 @@
 var $$ = mdui.JQ;
 //系统设置
-var NC_version = "1.5",
-    NC_bulid = 200307,
+var NC_version = "1.6",
+    NC_bulid = 2003071513,
     NC_channel = "NowChat_Public",
-    login_count = 0;
-//Goeasy controler
-var user_Name,
+    NC_goeasy = "nowchat-official",
+    login_count = 0,
+    user_Name,
     user_Location,
     user_Avatar,
-    user_UUID,
-    goEasy = new GoEasy({
-        host: 'hangzhou.goeasy.io',
-        appkey: "BC-de02bc0bb7e54c009f43510d74c88156",
-        forceTLS: true,
-        onDisconnected: function() {
-            console.log('goeasy:连接断开！')
-            mdui.dialog({
-                title: '错误！',
-                content: '与远程服务器连接断开，请刷新后重试！',
-                modal: true,
-                closeOnEsc: false,
-                destroyOnClosed: true
-            });
-        },
-        onConnectFailed: function(error) {
-            console.log('goeasy:连接失败或错误！')
-            mdui.dialog({
-                title: '错误！',
-                content: '与远程服务器连接断开，请刷新后重试！',
-                modal: true,
-                closeOnEsc: false,
-                destroyOnClosed: true
-            });
-        }
-    });
+    user_UUID
 
 function randomNum(minNum, maxNum) {
     //随机整数生成器
@@ -189,7 +164,7 @@ function init() {
 
     //MDUI 元素控制器
     var inst_ControlMenu = new mdui.Menu('#openControlMenu', '#controlMenu');
-    var inst_infoBOX = new mdui.Dialog('#informationBOX');
+    var inst_infoBOX = new mdui.Dialog('#informationBOX', { history: false });
     document.getElementById('openinfoBOX').addEventListener('click', function() {
         inst_infoBOX.open();
     });
@@ -208,6 +183,67 @@ $$(function() {
         closeOnEsc: false,
         closeOnConfirm: false,
         history: false
+    });
+
+    var inst_loading = new mdui.snackbar({
+        message: '正在连接至服务器....',
+        position: 'top',
+        timeout: 0,
+        closeOnOutsideClick: false
+    });
+
+    $$.ajax({
+        method: 'GET',
+        url: NC_goeasy + '.json',
+        xhrFields: {
+            withCredentials: true
+        },
+        dataType: 'json',
+        beforeSend: function() {
+            inst_loading.open()
+        },
+        error: function() {
+            mdui.dialog({
+                title: '错误！',
+                content: '无法获取服务器地址。',
+                modal: true,
+                closeOnEsc: false
+            });
+        },
+        success: function(data) {
+            goEasy = new GoEasy({
+                host: data.host_ip,
+                appkey: data.host_key,
+                forceTLS: data.host_TLS,
+                onDisconnected: function() {
+                    console.log('goeasy:连接断开！')
+                    mdui.dialog({
+                        title: '错误！',
+                        content: '与远程服务器连接断开，请刷新后重试！',
+                        modal: true,
+                        closeOnEsc: false,
+                        destroyOnClosed: true
+                    });
+                },
+                onConnectFailed: function(error) {
+                    console.log('goeasy:连接失败或错误！')
+                    mdui.dialog({
+                        title: '错误！',
+                        content: '与远程服务器连接断开，请刷新后重试！',
+                        modal: true,
+                        closeOnEsc: false,
+                        destroyOnClosed: true
+                    });
+                }
+            });
+            inst_loading.close()
+            new mdui.snackbar({
+                message: '连接至' + data.host_name + '成功！',
+                position: 'top',
+                timeout: 2,
+                closeOnOutsideClick: false
+            });
+        }
     });
 
     inst_HAS.open()
