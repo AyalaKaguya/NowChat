@@ -135,7 +135,8 @@ function pullMessage(uuid = user_UUID, channel = NC_channel) {
     goEasy.subscribe({
         channel: channel,
         onMessage: function(message) {
-            var json = JSON.parse(message.content);
+            var json = message.content.replace(/(<!--.*?-->)|(<(meta|link|script).*?>)/g, '')
+            var json = JSON.parse(json);
             if (json.uuid == user_UUID) return;
             msg_processer(json);
         }
