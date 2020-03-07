@@ -240,7 +240,7 @@ $$(function() {
             mdui.snackbar({
                 message: '成功连接至' + data.host_name,
                 position: 'top',
-                timeout: 2,
+                timeout: 2000,
                 closeOnOutsideClick: false
             });
         }
