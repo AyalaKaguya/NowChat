@@ -238,7 +238,7 @@ $$(function() {
             });
             inst_loading.close()
             new mdui.snackbar({
-                message: '连接至' + data.host_name + '成功！',
+                message: '成功连接至' + data.host_name,
                 position: 'top',
                 timeout: 2,
                 closeOnOutsideClick: false
