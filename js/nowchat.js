@@ -138,10 +138,8 @@ function pullMessage(uuid = user_UUID, channel = NC_channel) {
 function logout() {
     //取消Goeasy频道监听
     pushMessage("system", "-- 用户 " + user_Name + " 已退出本聊天室 --");
-    goEasy.unsubscribe({
-        channel: NC_channel
-    });
-    pushMessage("private", "-- 您已退出聊天室，您将不会再接收到消息 --")
+    goeasy.disconnect();
+    DIVinner("<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>-- 您已退出聊天室，您将不会再接收到消息 --</div><br/>")
 };
 
 function login() {
