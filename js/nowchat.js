@@ -4,7 +4,6 @@ var NC_version = "1.6",
     NC_bulid = 2003071513,
     NC_channel = "NowChat_Public",
     NC_goeasy = "nowchat-official",
-    login_count = 0,
     user_Name,
     user_Location,
     user_Avatar,
@@ -137,47 +136,9 @@ function refresh() {
     pushMessage("private", "-- 已刷新 --")
 };
 
-function init() {
-    //初始化页面，添加监听
-    //调用一次限制
-    login_count = login_count + 1;
-    if (login_count !== 1) { return "none" };
-
-    //随机为用户选取头像
-    user_Avatar = "images/Avatar-" + randomNum(1, 10) + ".png";
-
-    //生成用户UUID
-    user_UUID = $$.guid(user_Name);
-
-    //启动enter键监听
-    document.onkeydown = function(event) {
-        var e = event || window.event || arguments.callee.caller.arguments[0];
-        if (e && e.keyCode == 13) {
-            sendMessage();
-        };
-    };
-
-    //启用页面关闭监听
-    window.onbeforeunload = function() {　　
-        logout();
-    };
-
-    //MDUI 元素控制器
-    var inst_ControlMenu = new mdui.Menu('#openControlMenu', '#controlMenu');
-    var inst_infoBOX = new mdui.Dialog('#informationBOX', { history: false });
-    document.getElementById('openinfoBOX').addEventListener('click', function() {
-        inst_infoBOX.open();
-    });
-    document.getElementById('openControlMenu').addEventListener('click', function() {
-        inst_ControlMenu.open();
-    });
-
-    //登陆
-    login();
-};
-
 //获取用户名等相关配置,并启动。
 $$(function() {
+    //定义一些登陆组件
     var inst_HAS = new mdui.Dialog('#HAS', {
         modal: true,
         closeOnEsc: false,
@@ -185,13 +146,7 @@ $$(function() {
         history: false
     });
 
-    var inst_loading = new mdui.snackbar({
-        message: '正在连接至服务器....',
-        position: 'top',
-        timeout: 0,
-        closeOnOutsideClick: false
-    });
-
+    //获取JSON配置
     $$.ajax({
         method: 'GET',
         url: NC_goeasy + '.json',
@@ -199,9 +154,6 @@ $$(function() {
             withCredentials: true
         },
         dataType: 'json',
-        beforeSend: function() {
-            inst_loading.open()
-        },
         error: function() {
             mdui.dialog({
                 title: '错误！',
@@ -211,6 +163,7 @@ $$(function() {
             });
         },
         success: function(data) {
+            //连接至Goeasy
             goEasy = new GoEasy({
                 host: data.host_ip,
                 appkey: data.host_key,
@@ -236,26 +189,60 @@ $$(function() {
                     });
                 }
             });
-            inst_loading.close()
-            mdui.snackbar({
+
+            var inst_onConnect = new mdui.snackbar({
                 message: '成功连接至' + data.host_name,
                 position: 'top',
                 timeout: 2000,
                 closeOnOutsideClick: false
             });
-        }
-    });
 
-    inst_HAS.open()
-    var dialog_HAS = document.getElementById('HAS');
-    dialog_HAS.addEventListener('confirm.mdui.dialog', function() {
-        var preg = /^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/
-        user_Name = document.getElementById("HAS_UNI").value
-        if (preg.test(user_Name) == true) {
-            inst_HAS.close()
-            init(); //网页初始化
-        } else {
-            $$('#HAS_label').addClass('mdui-text-color-pink-accent')
+            //打开HAS，获取用户名
+            inst_HAS.open()
+            inst_onConnect.open()
+
+            var dialog_HAS = document.getElementById('HAS');
+            dialog_HAS.addEventListener('confirm.mdui.dialog', function() {
+                var preg = /^[\u4E00-\u9FA5\uF900-\uFA2D|\w]{2,20}$/
+                user_Name = document.getElementById("HAS_UNI").value
+                if (preg.test(user_Name) == true) {
+                    inst_HAS.close();
+                    //网页初始化
+                    //随机为用户选取头像
+                    user_Avatar = "images/Avatar-" + randomNum(1, 10) + ".png";
+
+                    //生成用户UUID
+                    user_UUID = $$.guid(user_Name);
+
+                    //启动enter键监听
+                    document.onkeydown = function(event) {
+                        var e = event || window.event || arguments.callee.caller.arguments[0];
+                        if (e && e.keyCode == 13) {
+                            sendMessage();
+                        };
+                    };
+
+                    //启用页面关闭监听
+                    window.onbeforeunload = function() {　　
+                        logout();
+                    };
+
+                    //MDUI 元素控制器
+                    var inst_ControlMenu = new mdui.Menu('#openControlMenu', '#controlMenu');
+                    var inst_infoBOX = new mdui.Dialog('#informationBOX', { history: false });
+                    document.getElementById('openinfoBOX').addEventListener('click', function() {
+                        inst_infoBOX.open();
+                    });
+                    document.getElementById('openControlMenu').addEventListener('click', function() {
+                        inst_ControlMenu.open();
+                    });
+
+                    //登陆
+                    login();
+                } else {
+                    $$('#HAS_label').addClass('mdui-text-color-pink-accent')
+                }
+            });
         }
     });
 })
