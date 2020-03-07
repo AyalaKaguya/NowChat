@@ -4,10 +4,16 @@ var NC_version = "1.6",
     NC_bulid = 2003071513,
     NC_channel = "NowChat_Public",
     NC_goeasy = "nowchat-official",
+    user_logon = false,
     user_Name,
     user_Location,
     user_Avatar,
     user_UUID
+
+//启用页面关闭监听
+window.onbeforeunload = function() {　　
+    logout();
+};
 
 function randomNum(minNum, maxNum) {
     //随机整数生成器
@@ -117,6 +123,7 @@ function pullMessage(uuid = user_UUID, channel = NC_channel) {
 };
 
 function logout() {
+    if (user_logon !== true) return;
     //取消Goeasy频道监听
     pushMessage("system", "-- 用户 " + user_Name + " 已退出本聊天室 --");
     goEasy.disconnect();
@@ -124,6 +131,7 @@ function logout() {
 };
 
 function login() {
+    if (user_logon !== true) user_logon = true;
     //打开Goeasy频道监听
     pushMessage("system", "-- 用户 " + user_Name + " 已加入本聊天室 --");
     pullMessage()
@@ -222,21 +230,15 @@ $$(function() {
                         };
                     };
 
-                    //启用页面关闭监听
-                    window.onbeforeunload = function() {　　
-                        logout();
-                    };
-
                     //MDUI 元素控制器
                     var inst_ControlMenu = new mdui.Menu('#openControlMenu', '#controlMenu');
                     var inst_infoBOX = new mdui.Dialog('#informationBOX', { history: false });
-                    document.getElementById('openinfoBOX').addEventListener('click', function() {
+                    $$('#openinfoBOX').on('click', function() {
                         inst_infoBOX.open();
                     });
-                    document.getElementById('openControlMenu').addEventListener('click', function() {
+                    $$('#openControlMenu').on('click', function() {
                         inst_ControlMenu.open();
                     });
-
                     //登陆
                     login();
                 } else {
