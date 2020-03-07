@@ -1,6 +1,6 @@
 var $$ = mdui.JQ;
 //系统设置
-var NC_version = "1.4",
+var NC_version = "1.5",
     NC_bulid = 200307,
     NC_channel = "NowChat_Public",
     login_count = 0;
