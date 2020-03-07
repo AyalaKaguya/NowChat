@@ -237,7 +237,7 @@ $$(function() {
                 }
             });
             inst_loading.close()
-            new mdui.snackbar({
+            mdui.snackbar({
                 message: '成功连接至' + data.host_name,
                 position: 'top',
                 timeout: 2,
