@@ -35,7 +35,7 @@ function DIVinner(html, div = "textarea") {
     if (html !== " ") {
         $$('#' + div).append(html);
     };
-    var div = document.getElementById('textarea');
+    var div = document.getElementById(div);
     div.scrollTop = div.scrollHeight;
 };
 
