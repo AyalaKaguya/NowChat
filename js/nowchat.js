@@ -10,11 +10,6 @@ var NC_version = "1.6",
     user_Avatar,
     user_UUID
 
-//启用页面关闭监听
-window.onbeforeunload = function() {　　
-    logout();
-};
-
 function randomNum(minNum, maxNum) {
     //随机整数生成器
     switch (arguments.length) {
@@ -218,6 +213,14 @@ $$(function() {
                     //网页初始化
                     //随机为用户选取头像
                     user_Avatar = "images/Avatar-" + randomNum(1, 10) + ".png";
+
+                    //用户退出操作监听
+                    (function() {
+                        window.onbeforeunload = function() {　　
+                            alert("unload is ok!")
+                            logout();
+                        };
+                    });
 
                     //生成用户UUID
                     user_UUID = $$.guid(user_Name);
