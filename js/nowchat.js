@@ -244,6 +244,25 @@ $$(function() {
                     $$('#openControlMenu').on('click', function() {
                         inst_ControlMenu.open();
                     });
+                    $$(document).on('contextmenu', function(e) {
+                        //监听鼠标右击事件 / 移动端长按事件
+                        if (e.button === 2 || e.button === 0) {
+                            e.preventDefault();
+                            var _x = e.pageX,
+                                _y = e.pageY;
+
+                            let $div = $$("<div></div>").css({
+                                position: 'absolute',
+                                top: _y + 'px',
+                                left: _x + 'px',
+                            });
+                            $$('body').append($div);
+                            var inst = new mdui.Menu($div, '#rightMenu');
+                            inst.open();
+                            $div.remove();
+                        }
+                    });
+
                     //登陆
                     login();
                 } else {
