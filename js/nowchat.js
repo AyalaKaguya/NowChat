@@ -248,7 +248,6 @@ $$(function() {
 window.onload = function() {
     //用户退出操作监听
     window.addEventListener('unload', function(event) {
-        alert("unload is ok!")
         logout();
     });
 };
