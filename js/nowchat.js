@@ -97,6 +97,7 @@ function pushMessage(type, msg, userName = user_Name, uuid = user_UUID, userAvat
         DIVinner("<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>" + msg + "</div><br/>")
         return
     };
+    if (json == undefined) return;
     msg_processer(json);
     goEasy.publish({
         channel: json.channel,
@@ -214,14 +215,6 @@ $$(function() {
                     //随机为用户选取头像
                     user_Avatar = "images/Avatar-" + randomNum(1, 10) + ".png";
 
-                    //用户退出操作监听
-                    (function() {
-                        window.onbeforeunload = function() {　　
-                            alert("unload is ok!")
-                            logout();
-                        };
-                    });
-
                     //生成用户UUID
                     user_UUID = $$.guid(user_Name);
 
@@ -251,3 +244,11 @@ $$(function() {
         }
     });
 })
+
+window.onload = function() {
+    //用户退出操作监听
+    window.addEventListener('unload', function(event) {
+        alert("unload is ok!")
+        logout();
+    });
+};
