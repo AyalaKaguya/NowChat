@@ -1,6 +1,6 @@
 {
-    "host_ip": "hangzhou.goeasy.io",
-    "host_key": "BC-de02bc0bb7e54c009f43510d74c88156",
-    "host_name": "NowChat - Official",
-    "host_TLS": true
+    "host_ip": "",
+    "host_key": "",
+    "host_name": "",
+    "host_TLS": false
 }
