@@ -253,16 +253,7 @@ $$(function() {
                     pushMessage("system", "-- 用户 " + user_Name + " 已加入本聊天室 --");
                     pullMessage()
                     pushMessage("private", "-- 您已加入聊天室：Public --");
-                    //用户退出操作监听
-                    window.onload = function() {
-                        window.addEventListener('unload', function(event) {
-                            if (user_logon !== true) return;
-                            //解除Goeasy实例
-                            pushMessage("system", "-- 用户 " + user_Name + " 已退出本聊天室 --");
-                            goEasy.disconnect();
-                            //DIVinner("<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>-- 您已退出聊天室，您将不会再接收到消息 --</div><br/>")
-                        });
-                    };
+
                 } else {
                     $$('#HAS_label').addClass('mdui-text-color-pink-accent')
                 }
@@ -270,3 +261,14 @@ $$(function() {
         }
     });
 });
+
+//用户退出操作监听
+window.onload = function() {
+    window.addEventListener('unload', function(event) {
+        if (user_logon !== true) return;
+        //解除Goeasy实例
+        pushMessage("system", "-- 用户 " + user_Name + " 已退出本聊天室 --");
+        goEasy.disconnect();
+        //DIVinner("<br/><div style='text-align:center;' class='mdui-text-color-black-secondary'>-- 您已退出聊天室，您将不会再接收到消息 --</div><br/>")
+    });
+};
